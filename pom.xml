@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.whz.archetype</groupId>
+    <artifactId>whz-archetype-quickstart</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <properties>
+        <java.version>8</java.version>
+        <spring-boot.version>2.0.3.RELEASE</spring-boot.version>
+        <mysql-connector-java.version>5.1.47</mysql-connector-java.version>
+    </properties>
+
+    <dependencies>
+
+        <!-- SpringBoot -->
+        <!-- 不再需要去继承 springBoot module了 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-dependencies</artifactId>
+            <version>${spring-boot.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
+
+        <!-- mysql-connector -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector-java.version}</version>
+        </dependency>
+        <!-- mybatis -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+        <!-- pagehelper -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.5</version>
+        </dependency>
+
+        <!-- 三方工具 -->
+
+        <!-- hutool基础的工具 -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-core</artifactId>
+            <version>5.8.1</version>
+        </dependency>
+        <!-- hutool高级的工具 -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.8.1</version>
+        </dependency>
+        <!-- apache基础工具 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.5</version>
+        </dependency>
+        <!-- apache集合工具 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.4</version>
+        </dependency>
+        <!-- apacheIO工具 -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.5</version>
+        </dependency>
+        <!-- json工具 -->
+        <dependency>
+            <artifactId>fastjson</artifactId>
+            <groupId>com.alibaba</groupId>
+            <version>1.2.83</version>
+        </dependency>
+        <!-- google工具 -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>18.0</version>
+        </dependency>
+        <!-- javassist -->
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.20.0-GA</version>
+        </dependency>
+
+        <!-- log -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.16</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.17.1</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>log4j-api</artifactId>
+                    <groupId>org.apache.logging.log4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+
+        <!-- 测试 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>${spring-boot.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- spring-boot-starter-test已经依赖了junit:junit包 -->
+        <!--<dependency>-->
+        <!--    <groupId>junit</groupId>-->
+        <!--    <artifactId>junit</artifactId>-->
+        <!--    <version>4.12</version>-->
+        <!--    <scope>test</scope>-->
+        <!--</dependency>-->
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- spring-boot-maven-plugin -->
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>1.4.0.RELEASE</version>
+                    <configuration>
+                        <executable>true</executable>
+                        <requiresUnpack>
+                            <dependency>
+                                <groupId>com.netflix.eureka</groupId>
+                                <artifactId>eureka-core</artifactId>
+                            </dependency>
+                            <dependency>
+                                <groupId>com.netflix.eureka</groupId>
+                                <artifactId>eureka-client</artifactId>
+                            </dependency>
+                        </requiresUnpack>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- 自定义JDK版本的编译插件: maven-compiler-plugin -->
+                <plugin>
+                    <!-- 指定maven编译的jdk版本，如果不指定：maven3默认用jdk 1.5、maven2默认用jdk 1.3 -->
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.1</version>
+                    <configuration>
+                        <!-- 一般而言，target与source是保持一致的，但是，有时候为了让程序能在其他版本的jdk中运行(对于低版本目标jdk，源代码中不能使用低版本jdk中不支持的语法)，会存在target不同于source的情况 -->
+                        <!-- 源代码使用的JDK版本 -->
+                        <source>${java.version}</source>
+                        <!-- 需要生成的目标class文件的编译版本 -->
+                        <target>${java.version}</target>
+                        <!-- 字符集编码 -->
+                        <encoding>UTF-8</encoding>
+                        <!-- 跳过测试 -->
+                        <skip>true</skip>
+                        <verbose>true</verbose>
+                        <showWarnings>true</showWarnings>
+                        <!-- 要使compilerVersion标签生效，还需要将fork设为true，用于明确表示编译版本配置的可用 -->
+                        <fork>true</fork>
+                        <!-- 使用指定的javac命令，例如：<executable>${JAVA_1_4_HOME}/bin/javac</executable> -->
+                        <executable><!-- path-to-javac --></executable>
+                        <!-- 指定插件将使用的编译器的版本 -->
+                        <compilerVersion>1.3</compilerVersion>
+                        <!-- 编译器使用的初始内存 -->
+                        <meminitial>128m</meminitial>
+                        <!-- 编译器使用的最大内存 -->
+                        <maxmem>512m</maxmem>
+                        <!-- 这个选项用来传递编译器自身不包含但是却支持的参数选项 -->
+                        <compilerArgument>-verbose -bootclasspath ${java.home}\lib\rt.jar</compilerArgument>
+                    </configuration>
+                </plugin>
+                <!-- 自定义单元测试的插件: maven-surefire-plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <configuration>
+                        <!-- 打包时，可以跳过单元测试 -->
+                        <skipTests>true</skipTests>
+                        <!--忽略测试失败，Maven在测试阶段出现失败的用例时，默认的行为是停止当前构建，构建过程也会以失败结束。有时候（如测试驱动开发模式）即使测试出现失败用例，仍然希望能继续构建目。-->
+                        <testFailureIgnore>true</testFailureIgnore>
+                        <!--自定义要测试的类：-->
+                        <includes>
+                            <!-- surefire默认的查找测试类的模式包括：
+                            **/Test*.java
+                            **/*Test.java
+                            **/*TestCase.java -->
+                            <include>**/Test*.java</include>
+                        </includes>
+                        <!-- 排除指定的测试类 -->
+                        <excludes>
+                            <!-- 排除哪些每次都需要修改参数才能执行的测试类 -->
+                            <exclude>**/*LocalTest.java</exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+                <!-- 源码打包插件: maven-source-plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.2.1</version>
+                    <configuration>
+                        <!-- attach的值为true，表示打成的jar文件会自动安装（发布或部署）到本地的Maven仓库中 -->
+                        <attach>true</attach>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <!-- 任务名称 -->
+                            <id>attach-sources</id>
+                            <!-- 表示在什么阶段打包源文件，这里配置的再mvn package时打包源代码 -->
+                            <phase>package</phase>
+                            <goals>
+                                <!-- 将jar-no-fork绑定在package流程节点上 -->
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- 资源⽂件打包插件: maven-resources-plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.7</version>
+                    <configuration>
+                        <nonFilteredFileExtensions>
+                            <nonFilteredFileExtension>perm</nonFilteredFileExtension>
+                        </nonFilteredFileExtensions>
+                    </configuration>
+                </plugin>
+                <!-- 将依赖包一起打包的插件: xxx-with-dependencies -->
+                <plugin>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <!-- 指定启动的Main类，否则启动时会报"xxx没有主清单属性" com.dangdang.ddframe.job.example.EmbedZookeeperServer -->
+                                <mainClass>com.whz.archetype.Application</mainClass>
+                            </manifest>
+                        </archive>
+                        <!-- 将依赖的包一起包，否则启动会报找不到依赖的类 -->
+                        <descriptorRefs>
+                            <descriptorRef>jar-with-dependencies</descriptorRef>
+                        </descriptorRefs>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <!--绑定到package生命周期阶段上-->
+                            <phase>package</phase>
+                            <goals>
+                                <!--绑定到package生命周期阶段上-->
+                                <goal>single</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- deploy包到远程仓库的插件: maven-deploy-plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.7</version>
+                    <configuration>
+                        <skip>false</skip>
+                    </configuration>
+                </plugin>
+
+                <!-- mvn mybatis-generator:generate -->
+                <plugin>
+                    <groupId>org.mybatis.generator</groupId>
+                    <artifactId>mybatis-generator-maven-plugin</artifactId>
+                    <version>1.3.2</version>
+                    <configuration>
+                        <verbose>true</verbose>
+                        <overwrite>true</overwrite>
+                        <configurationFile>${basedir}/src/main/resources/generatorConfig.xml</configurationFile>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.mybatis.generator</groupId>
+                            <artifactId>mybatis-generator-core</artifactId>
+                            <version>1.3.5</version>
+                        </dependency>
+                        <!-- 数据库驱动 -->
+                        <dependency>
+                            <groupId>mysql</groupId>
+                            <artifactId>mysql-connector-java</artifactId>
+                            <version>${mysql-connector-java.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>
